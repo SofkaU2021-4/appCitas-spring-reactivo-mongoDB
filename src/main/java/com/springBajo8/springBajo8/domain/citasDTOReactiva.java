@@ -3,31 +3,23 @@ package com.springBajo8.springBajo8.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
-
 @Document(collection = "citas")
 public class citasDTOReactiva {
 
     @Id
-    private String id = UUID.randomUUID().toString().substring(0, 10);
-
+    private String id;
     private String idPaciente;
-
     private String nombrePaciente;
-
     private String apellidosPaciente;
-
     private String nombreMedico;
-
     private String apellidosMedico;
-
-    private LocalDate fechaReservaCita;
-
+    private String fechaReservaCita;
     private String horaReservaCita;
+    private Boolean estadoReservaCita;
 
-    private String estadoReservaCita;
+
+
+
 
     public String getId() {
         return id;
@@ -77,11 +69,11 @@ public class citasDTOReactiva {
         this.apellidosMedico = apellidosMedico;
     }
 
-    public LocalDate getFechaReservaCita() {
+    public String getFechaReservaCita() {
         return fechaReservaCita;
     }
 
-    public void setFechaReservaCita(LocalDate fechaReservaCita) {
+    public void setFechaReservaCita(String fechaReservaCita) {
         this.fechaReservaCita = fechaReservaCita;
     }
 
@@ -93,15 +85,12 @@ public class citasDTOReactiva {
         this.horaReservaCita = horaReservaCita;
     }
 
-    public String getEstadoReservaCita() {
+    public Boolean getEstadoReservaCita() {
         return estadoReservaCita;
     }
 
-    public void setEstadoReservaCita(String estadoReservaCita) {
+    public void setEstadoReservaCita(Boolean estadoReservaCita) {
         this.estadoReservaCita = estadoReservaCita;
     }
-
-    //private Date sendedDate = new Date();
-
 
 }

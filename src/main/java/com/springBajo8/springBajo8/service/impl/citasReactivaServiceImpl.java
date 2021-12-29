@@ -1,8 +1,6 @@
 package com.springBajo8.springBajo8.service.impl;
 
-//import com.yoandypv.reactivestack.messages.domain.Message;
-//import com.yoandypv.reactivestack.messages.repository.MessageRepository;
-//import com.yoandypv.reactivestack.messages.service.MessageService;
+
 import com.springBajo8.springBajo8.domain.citasDTOReactiva;
 import com.springBajo8.springBajo8.repository.IcitasReactivaRepository;
 import com.springBajo8.springBajo8.service.IcitasReactivaService;
@@ -19,12 +17,12 @@ public class citasReactivaServiceImpl implements IcitasReactivaService {
 
     @Override
     public Mono<citasDTOReactiva> save(citasDTOReactiva citasDTOReactiva) {
-        return this.IcitasReactivaRepository.save(citasDTOReactiva);
+        return IcitasReactivaRepository.save(citasDTOReactiva);
     }
 
     @Override
     public Mono<citasDTOReactiva> delete(String id) {
-        return this.IcitasReactivaRepository
+        return IcitasReactivaRepository
                 .findById(id)
                 .flatMap(p -> this.IcitasReactivaRepository.deleteById(p.getId()).thenReturn(p));
 
@@ -32,7 +30,7 @@ public class citasReactivaServiceImpl implements IcitasReactivaService {
 
     @Override
     public Mono<citasDTOReactiva> update(String id, citasDTOReactiva citasDTOReactiva) {
-        return this.IcitasReactivaRepository.findById(id)
+        return IcitasReactivaRepository.findById(id)
                 .flatMap(citasDTOReactiva1 -> {
                     citasDTOReactiva.setId(id);
                     return save(citasDTOReactiva);
@@ -42,17 +40,48 @@ public class citasReactivaServiceImpl implements IcitasReactivaService {
 
     @Override
     public Flux<citasDTOReactiva> findByIdPaciente(String idPaciente) {
-        return this.IcitasReactivaRepository.findByIdPaciente(idPaciente);
+        return IcitasReactivaRepository.findByIdPaciente(idPaciente);
     }
 
 
     @Override
     public Flux<citasDTOReactiva> findAll() {
-        return this.IcitasReactivaRepository.findAll();
+        return IcitasReactivaRepository.findAll();
     }
 
     @Override
     public Mono<citasDTOReactiva> findById(String id) {
-        return this.IcitasReactivaRepository.findById(id);
+        return IcitasReactivaRepository.findById(id);
     }
+
+    @Override
+    public  Mono<citasDTOReactiva> cancelarCitaReactiva(String id){
+        return IcitasReactivaRepository.findByIdAndEstadoReservaCitaTrue(id)
+                .flatMap(citaDTOReactiva ->{
+                 citaDTOReactiva.setEstadoReservaCita(false);
+                 return save(citaDTOReactiva);
+                })
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Error")));
+    }
+
+    @Override
+    public Flux<citasDTOReactiva> buscarCitaPorFechaYHora(String fecha, String hora) {
+        return IcitasReactivaRepository.findByfechaReservaCitaAndHoraReservaCita(fecha,hora)
+                .switchIfEmpty(Flux.error(new IllegalArgumentException("Error")));
+
+    }
+
+    @Override
+    public String buscarMedicoCitaReactiva(String id){
+
+        return IcitasReactivaRepository
+                .findByIdAndEstadoReservaCitaTrue(id).map(cita->{
+                    return cita.getNombreMedico() + " " + cita.getApellidosMedico() ;
+                })
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Error"))).block();
+
+    }
+
+
 }
+

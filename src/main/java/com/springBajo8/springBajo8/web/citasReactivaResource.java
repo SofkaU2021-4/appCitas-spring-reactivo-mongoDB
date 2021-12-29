@@ -19,20 +19,20 @@ public class citasReactivaResource {
     @PostMapping("/citasReactivas")
     @ResponseStatus(HttpStatus.CREATED)
     private Mono<citasDTOReactiva> save(@RequestBody citasDTOReactiva citasDTOReactiva) {
-        return this.icitasReactivaService.save(citasDTOReactiva);
+        return icitasReactivaService.save(citasDTOReactiva);
     }
 
     @DeleteMapping("/citasReactivas/{id}")
     private Mono<ResponseEntity<citasDTOReactiva>> delete(@PathVariable("id") String id) {
-        return this.icitasReactivaService.delete(id)
+        return icitasReactivaService.delete(id)
                 .flatMap(citasDTOReactiva -> Mono.just(ResponseEntity.ok(citasDTOReactiva)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 
     }
 
-    @PutMapping("/citasReactivas/{id}")
-    private Mono<ResponseEntity<citasDTOReactiva>> update(@PathVariable("id") String id, @RequestBody citasDTOReactiva citasDTOReactiva) {
-        return this.icitasReactivaService.update(id, citasDTOReactiva)
+    @PutMapping("/citasReactivas/")
+    private Mono<ResponseEntity<citasDTOReactiva>> update(@RequestBody citasDTOReactiva citasDTOReactiva) {
+        return icitasReactivaService.update(citasDTOReactiva.getId(), citasDTOReactiva)
                 .flatMap(citasDTOReactiva1 -> Mono.just(ResponseEntity.ok(citasDTOReactiva1)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 
@@ -40,12 +40,29 @@ public class citasReactivaResource {
 
     @GetMapping("/citasReactivas/{idPaciente}/byidPaciente")
     private Flux<citasDTOReactiva> findAllByidPaciente(@PathVariable("idPaciente") String idPaciente) {
-        return this.icitasReactivaService.findByIdPaciente(idPaciente);
+        return icitasReactivaService.findByIdPaciente(idPaciente);
     }
 
     @GetMapping(value = "/citasReactivas")
     private Flux<citasDTOReactiva> findAll() {
-        return this.icitasReactivaService.findAll();
+        return icitasReactivaService.findAll();
     }
+
+    @PutMapping("/citasReactivas/cancelar/{id}")
+    private Mono<citasDTOReactiva> cancelarCita(@PathVariable("id") String id){
+        return icitasReactivaService.cancelarCitaReactiva(id);
+    }
+
+    @GetMapping("/citasReactivas/buscarFechaYHora")
+    private Flux<citasDTOReactiva> findAllByidPaciente(@RequestBody citasDTOReactiva citasDTOReactiva) {
+        return icitasReactivaService.buscarCitaPorFechaYHora(citasDTOReactiva.getFechaReservaCita(),citasDTOReactiva.getHoraReservaCita());
+    }
+
+    @GetMapping("/citasReactivas/buscarMedico/{id}")
+        private String findNombreMedicoPorId(@PathVariable("id") String id){
+        return icitasReactivaService.buscarMedicoCitaReactiva(id);
+    }
+
+
 
 }
