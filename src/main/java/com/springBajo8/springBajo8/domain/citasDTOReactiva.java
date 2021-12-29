@@ -19,8 +19,6 @@ public class citasDTOReactiva {
 
 
 
-
-
     public String getId() {
         return id;
     }

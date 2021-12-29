@@ -4,34 +4,45 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document(collection = "Padecimiento")
-public class Padecimiento {
-    @Id
-    private String id;
-    private String nombre;
-    private String tratamiento;
 
-    public String getId() {
-        return id;
-    }
+@Document(collection = "padecimientos")
+    public class Padecimiento {
 
-    public void setId(String id) {
-        this.id = id;
-    }
+        @Id
+        private String id;
+        private String idPaciente;
+        private String nombrePadecimiento;
+        private String tratamiento;
 
-    public String getNombre() {
-        return nombre;
-    }
+        public String getId() {
+            return id;
+        }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-    public String getTratamiento() {
-        return tratamiento;
-    }
+        public String getIdPaciente() {
+            return idPaciente;
+        }
 
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
+        public void setIdPaciente(String idPaciente) {
+            this.idPaciente = idPaciente;
+        }
+
+        public String getNombrePadecimiento() {
+            return nombrePadecimiento;
+        }
+
+        public void setNombrePadecimiento(String nombrePadecimiento) {
+            this.nombrePadecimiento = nombrePadecimiento;
+        }
+
+        public String getTratamiento() {
+            return tratamiento;
+        }
+
+        public void setTratamiento(String tratamiento) {
+            this.tratamiento = tratamiento;
+        }
     }
-}

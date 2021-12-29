@@ -3,6 +3,7 @@ package com.springBajo8.springBajo8.service.impl;
 
 import com.springBajo8.springBajo8.domain.citasDTOReactiva;
 import com.springBajo8.springBajo8.repository.IcitasReactivaRepository;
+import com.springBajo8.springBajo8.repository.PacienteRepository;
 import com.springBajo8.springBajo8.service.IcitasReactivaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class citasReactivaServiceImpl implements IcitasReactivaService {
 
     @Autowired
     private IcitasReactivaRepository IcitasReactivaRepository;
+    @Autowired
+    private PacienteRepository pacienteRepository;
 
     @Override
     public Mono<citasDTOReactiva> save(citasDTOReactiva citasDTOReactiva) {
@@ -76,11 +79,12 @@ public class citasReactivaServiceImpl implements IcitasReactivaService {
 
         return IcitasReactivaRepository
                 .findByIdAndEstadoReservaCitaTrue(id).map(cita->{
-                    return cita.getNombreMedico() + " " + cita.getApellidosMedico() ;
+                    return cita.getNombreMedico() + " " + cita.getApellidosMedico()  ;
                 })
                 .switchIfEmpty(Mono.error(new IllegalArgumentException("Error"))).block();
 
     }
+
 
 
 }
