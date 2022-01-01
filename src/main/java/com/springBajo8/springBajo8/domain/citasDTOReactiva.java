@@ -9,7 +9,7 @@ public class citasDTOReactiva {
     @Id
     private String id;
     private String idPaciente;
-    private String nombrePaciente;
+        private String nombrePaciente;
     private String apellidosPaciente;
     private String nombreMedico;
     private String apellidosMedico;

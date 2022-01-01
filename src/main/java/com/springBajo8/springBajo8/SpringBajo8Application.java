@@ -21,7 +21,7 @@ public class SpringBajo8Application {
 				.select()
 				.apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any())
-				.build();
+				.build();	
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBajo8Application.class, args);
